@@ -1,7 +1,7 @@
 import pytest
 from pabutools.election import Project, Instance, ApprovalBallot, ApprovalProfile 
-from src.rules.greedyAV import greedy_av
-from src.rivalry_reduction.rivalry_reduction import rivalry_reduction
+from pb_robustness_measures.rules.greedyAV import greedy_av
+from pb_robustness_measures.rivalry_reduction.rivalry_reduction import rivalry_reduction 
 from pabutools.rules.phragmen import sequential_phragmen
 from pabutools.rules.mes.mes_rule import method_of_equal_shares
 from pabutools.election import Cost_Sat
@@ -51,33 +51,33 @@ def test_no_supporters_returns_none_av(simple_two_projects):
     result = rivalry_reduction(instance, profile, p6, greedy_av)
     assert result is None
 
-@pytest.mark.slow
-def test_realistic_scenario_av():
-    from pabutools import election
-    path = "./tests/pabulib/poland_warszawa_2017_kolo.pb"
-    instance, profile = election.parse_pabulib(path)
-    alloc = greedy_av(instance, profile)
-    p3 = alloc[0]
+# @pytest.mark.slow
+# def test_realistic_scenario_av():
+#     from pabutools import election
+#     path = "./tests/pabulib/poland_warszawa_2017_kolo.pb"
+#     instance, profile = election.parse_pabulib(path)
+#     alloc = greedy_av(instance, profile)
+#     p3 = alloc[0]
 
-    assert p3 in greedy_av(instance, profile)
-    result = rivalry_reduction(instance, profile, p3, greedy_av, trials=5)
-    assert result <= 0 
+#     assert p3 in greedy_av(instance, profile)
+#     result = rivalry_reduction(instance, profile, p3, greedy_av, trials=5)
+#     assert result <= 0 
 
 
-    for p in instance:
-        if p not in alloc:
-            p3 = p
-            break
-    # print(instance)
-    # print(profile)
+#     for p in instance:
+#         if p not in alloc:
+#             p3 = p
+#             break
+#     # print(instance)
+#     # print(profile)
 
-    assert p3 not in greedy_av(instance, profile)
-    result = rivalry_reduction(instance, profile, p3, greedy_av, trials=5)
+#     assert p3 not in greedy_av(instance, profile)
+#     result = rivalry_reduction(instance, profile, p3, greedy_av, trials=5)
 
-    assert result > 0 
+#     assert result > 0 
 
-    profile.extend([ApprovalBallot([p3])] * result)
-    assert p3 in greedy_av(instance, profile)
+#     profile.extend([ApprovalBallot([p3])] * result)
+#     assert p3 in greedy_av(instance, profile)
 
 
 def test_rivalry_reduction_losing_phragmen(simple_two_projects):

@@ -4,7 +4,7 @@ from pabutools.rules.mes.mes_rule import method_of_equal_shares
 from pabutools.election import Cost_Sat
 from pabutools import election
 
-from src.add_complement.add_complement_mes import add_complement_mes
+from pb_robustness_measures.add_complement.add_complement_mes import *
 
 
 @pytest.fixture
@@ -60,7 +60,7 @@ def test_project_not_selected_returns_zero(setup_election):
     instance, profile, p1, p2, p3 = setup_election
 
     ell = add_complement_mes(p3, instance, profile, step=1)
-    assert ell == 0
+    assert ell is not None and ell == 0
 
 @pytest.mark.slow
 def test_real_world_example():
@@ -72,7 +72,7 @@ def test_real_world_example():
     assert isinstance(p, Project)
     ell = add_complement_mes(p, instance, profile, step=step)
 
-    assert ell > 0
+    assert ell is not None and ell > 0
 
     other_projects = [proj for proj in instance if proj != p]
     ballot = ApprovalBallot(set(other_projects))

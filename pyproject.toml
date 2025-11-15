@@ -1,22 +1,23 @@
 [tool.poetry]
-name = "lib"
+name = "pb-robustness-measures"   # IMPORTANT: Python package name must use hyphens
 version = "0.1.0"
-description = "Desc"
-authors = ["kyrylo <yakimenko.kir@gmail.com>"]
+description = "This library provides implementations of robustness measures for participatory budgeting election instances."
+authors = ["Kyrylo Iakymenko <yakimenko.kir@gmail.com>"]
 readme = "README.md"
-packages = [{include = "lib", from = "src"}]
+packages = [{ include = "pb_robustness_measures", from = "src" }]
 
 [tool.poetry.dependencies]
 python = ">=3.12,<3.13"
 pabutools = "*"
 
 [tool.poetry.group.dev.dependencies]
-pytest = "^8.3.5"
-black = "^25.1.0"
-flake8 = "^7.2.0"
-isort = "^6.0.1"
-sphinx = "^8.2.3"
+pytest = "^8"
+black = "*"
+flake8 = "*"
+isort = "*"
+sphinx = "*"
 
 [build-system]
-requires = ["poetry-core>=2.0.0,<3.0.0"]
+requires = ["poetry-core>=2.0.0"]
 build-backend = "poetry.core.masonry.api"
+

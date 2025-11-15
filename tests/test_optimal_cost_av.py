@@ -1,8 +1,8 @@
 import pytest
 
 from pabutools.election import Project, Instance, ApprovalBallot, ApprovalProfile, total_cost
-from src.optimal_cost.optimal_cost_av import optimal_cost_av
-from src.rules.greedyAV import greedy_av
+from pb_robustness_measures.optimal_cost.optimal_cost_av import optimal_cost_av
+from pb_robustness_measures.rules.greedyAV import greedy_av
 
 @pytest.fixture
 def setup_election():

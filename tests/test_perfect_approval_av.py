@@ -2,8 +2,8 @@ import pytest
 
 from pabutools.election import Project, Instance, ApprovalBallot, ApprovalProfile, total_cost
 from pabutools import election
-from src.remove_approval.perfect_approval_av import perfect_approval_av
-from src.rules.greedyAV import greedy_av
+from pb_robustness_measures.remove_approval.perfect_approval_av import perfect_approval_av
+from pb_robustness_measures.rules.greedyAV import greedy_av
 
 @pytest.fixture
 def setup_election():
