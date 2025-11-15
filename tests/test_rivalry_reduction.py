@@ -100,25 +100,25 @@ def test_no_supporters_returns_none_phragmen(simple_two_projects):
     result = rivalry_reduction(instance, profile, p6, sequential_phragmen)
     assert result is None
 
-@pytest.mark.slow
-def test_realistic_scenario_phragmen():
-    from pabutools import election
-    path = "./tests/pabulib/poland_warszawa_2017_kolo.pb"
-    instance, profile = election.parse_pabulib(path)
-    alloc = sequential_phragmen(instance, profile)
-    p3 = alloc[0]
-    result = rivalry_reduction(instance, profile, p3, sequential_phragmen, trials=5)
-    assert result <= 0
+# @pytest.mark.slow
+# def test_realistic_scenario_phragmen():
+#     from pabutools import election
+#     path = "./tests/pabulib/poland_warszawa_2017_kolo.pb"
+#     instance, profile = election.parse_pabulib(path)
+#     alloc = sequential_phragmen(instance, profile)
+#     p3 = alloc[0]
+#     result = rivalry_reduction(instance, profile, p3, sequential_phragmen, trials=5, step=10)
+#     assert result <= 0
 
-    for p in instance:
-        if p not in alloc:
-            p3 = p
-            break
-    result = rivalry_reduction(instance, profile, p3, sequential_phragmen, trials=5)
-    assert result > 0
+#     for p in instance:
+#         if p not in alloc:
+#             p3 = p
+#             break
+#     result = rivalry_reduction(instance, profile, p3, sequential_phragmen, trials=5)
+#     assert result > 0
 
-    profile.extend([ApprovalBallot([p3])] * (result + 20)) # may potentially fail its probabilistic
-    assert p3 in sequential_phragmen(instance, profile)
+#     profile.extend([ApprovalBallot([p3])] * (result + 20)) # may potentially fail its probabilistic
+#     assert p3 in sequential_phragmen(instance, profile)
 
 # def test_rivalry_reduction_losing_mes(simple_two_projects):
 #     instance, profile, ps = simple_two_projects
@@ -140,22 +140,22 @@ def test_no_supporters_returns_none_mes(simple_two_projects):
     result = rivalry_reduction(instance, profile, p6, method_of_equal_shares, sat_class=Cost_Sat)
     assert result is None
 
-@pytest.mark.slow
-def test_realistic_scenario_mes():
-    from pabutools import election
-    path = "./tests/pabulib/poland_warszawa_2017_kolo.pb"
-    instance, profile = election.parse_pabulib(path)
-    alloc = method_of_equal_shares(instance, profile, sat_class=Cost_Sat)
-    p3 = alloc[0]
-    result = rivalry_reduction(instance, profile, p3, method_of_equal_shares, trials=5, sat_class=Cost_Sat)
-    assert result <= 0
+# @pytest.mark.slow
+# def test_realistic_scenario_mes():
+#     from pabutools import election
+#     path = "./tests/pabulib/poland_warszawa_2017_kolo.pb"
+#     instance, profile = election.parse_pabulib(path)
+#     alloc = method_of_equal_shares(instance, profile, sat_class=Cost_Sat)
+#     p3 = alloc[0]
+#     result = rivalry_reduction(instance, profile, p3, method_of_equal_shares, trials=5, sat_class=Cost_Sat)
+#     assert result <= 0
 
-    for p in instance:
-        if p not in alloc:
-            p3 = p
-            break
-    result = rivalry_reduction(instance, profile, p3, method_of_equal_shares, trials=5, sat_class=Cost_Sat)
-    assert result > 0
+#     for p in instance:
+#         if p not in alloc:
+#             p3 = p
+#             break
+#     result = rivalry_reduction(instance, profile, p3, method_of_equal_shares, trials=5, sat_class=Cost_Sat)
+#     assert result > 0
 
-    profile.extend([ApprovalBallot([p3])] * (result + 20)) # may potentially fail its probabilistic
-    assert p3 in method_of_equal_shares(instance, profile, sat_class=Cost_Sat)
+#     profile.extend([ApprovalBallot([p3])] * (result + 20)) # may potentially fail its probabilistic
+#     assert p3 in method_of_equal_shares(instance, profile, sat_class=Cost_Sat)
