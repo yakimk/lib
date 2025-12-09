@@ -1,7 +1,6 @@
 import math
 
 def f_stars_and_bars(R, k):
-    # number of ways to distribute R identical items into k labeled boxes
     if R < 0:
         return 0
     if k <= 0:
@@ -17,7 +16,6 @@ def g_count_T_M_r(T_max, M, r):
     dp0[0] = 1
 
     for _ in range(r):
-        # difference arrays length T_max+2 to support R+1 index
         diff0 = [0] * (T_max + 2)
         diff1 = [0] * (T_max + 2)
 
@@ -34,21 +32,17 @@ def g_count_T_M_r(T_max, M, r):
             v1 = dp1[s]
             if v0 == 0 and v1 == 0:
                 continue
-            # allowed c: 0..min(M, T_max - s)
             maxc = min(M, T_max - s)
             low = s
             high = s + maxc
             if low <= high:
                 if v0:
-                    # add v0 to newdp0[low..high]
                     range_add(diff0, low, high, v0)
-                    # if M in allowed c-range, move single index s+M from newdp0 to newdp1
                     if maxc >= M: # means s + M <= T_max
                         idx = s + M
                         range_add(diff0, idx, idx, -v0)
                         range_add(diff1, idx, idx, v0)
                 if v1:
-                    # add v1 to newdp1[low..high]
                     range_add(diff1, low, high, v1)
 
         new0 = [0] * (T_max + 1)
@@ -64,7 +58,7 @@ def g_count_T_M_r(T_max, M, r):
 
         dp0, dp1 = new0, new1
 
-    return dp1  # g(T) = dp1[T] for T=0..T_max
+    return dp1
 
 
 def count_by_M_T(n, N, K_set):

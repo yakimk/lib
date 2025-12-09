@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 from pabutools import election
 from pb_robustness_measures.sampling_robustness_measure.srm import plurality_sampling_robustness_measure
 
-PB_FOLDER = "testing_examples"
+PB_FOLDER = "ex"
 MULTIPLIERS = [0.1]
 
 def compute_srm_for_instance(pb_file, multipliers):

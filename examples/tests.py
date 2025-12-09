@@ -7,7 +7,7 @@ from pb_robustness_measures.sampling_robustness_measure.srm import (
     plurality_sampling_robustness_measure,
 )
 
-PB_FOLDER = "small_examples"
+PB_FOLDER = "ex"
 
 SAMPLE_SIZES = [10, 50, 100, 200, 300, 400, 1000]
 

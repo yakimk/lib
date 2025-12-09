@@ -8,6 +8,12 @@ def av_graph(
     instance: Instance,
     profile: AbstractApprovalProfile,
     tie_breaking: TieBreakingRule | None = None,
+    show_labels: bool = True,
+    name: str = "",
+    projects: int = 0,
+    voters : int =0, 
+    budget : int =0, 
+
     ):
     """
     Given an instance produces a graph of (supperters, cost) for each project
@@ -68,21 +74,27 @@ def av_graph(
             selected.append(False)
 
     fig, ax = plt.subplots(figsize=(10,6))
-    colors = ['red' if sel else 'blue' for sel in selected]
+    colors = ['blue' if sel else 'red' for sel in selected]
     ax.scatter(supporters, costs, c=colors)
-    for x, y, label in zip(supporters, costs, names):
-        ax.annotate(label, (x, y), textcoords="offset points", xytext=(5,5))
+    if show_labels:
+        for x, y, label in zip(supporters, costs, names):
+            ax.annotate(label, (x, y), textcoords="offset points", xytext=(5,5))
+
+
+    x0, x1 = supporters[0] + 1, supporters[0]
+    start, end = max(x0, x1), min(x0, x1)
+    ax.hlines(budget_levels[0], start, end)
 
 
     for i, y in enumerate(budget_levels):
-        if i + 1 < len(supporters):
-            x0, x1 = supporters[i], supporters[i+1]
+        if i > 0:
+            x0, x1 = supporters[i-1], supporters[i]
             start, end = max(x0, x1), min(x0, x1)
             ax.hlines(y, start, end)
 
 
-    for i in range(len(supporters) - 1):
-        x = supporters[i+1]
+    for i in range(len(supporters)-1):
+        x = supporters[i]
         y0 = budget_levels[i]
         y1 = budget_levels[i+1]
         bottom, top = min(y0, y1), max(y0, y1)
@@ -90,6 +102,15 @@ def av_graph(
 
     ax.set_xlabel('Number of Supporters')
     ax.set_ylabel('Project Cost')
-    ax.set_title('Projects by Supporters vs Cost with Remaining Budget Segments')
+    if voters > 0: vote = " | Voters: " + str(voters)
+    else: vote = ""
+    if projects > 0: proj = " | Projects: " + str(projects)
+    else: proj = ""
+    if budget > 0: budg = " | Budget: " + str(budget)
+    else: budg = ""
+    if name:
+        ax.set_title('Greedy-AV outcome of ' + name  + vote+ proj + budg)
+    else:
+        ax.set_title('Greedy-AV outcome'+ " | " + vote + proj + budg)
     ax.invert_xaxis()
     plt.show()
